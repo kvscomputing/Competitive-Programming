@@ -1,0 +1,41 @@
+/*
+ ID: kvseeth1
+ LANG: JAVA
+ PROG: palsquare
+ */
+import java.io.*;
+import java.util.*;
+
+public class palsquare
+{
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("palsquare.in"));
+    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("palsquare.out")));
+    int b = Integer.parseInt(br.readLine());
+    long iSquared;
+    String iSquaredBaseB;
+    for (long i = 1; i <= 300; i++) {
+      iSquared = (long)(Math.pow(i, 2));
+      iSquaredBaseB = Long.toString(iSquared, b);
+      if (isPalindrome(iSquaredBaseB)) {
+        pw.print(Long.toString(i, b).toUpperCase() + " " + iSquaredBaseB.toUpperCase() + "\n");
+      }
+      }
+    pw.close();
+    }
+  
+  public static boolean isPalindrome(String n) {
+    char[] nArr = new char[n.length()];
+    for (int i = 0; i < n.length(); i++) {
+      nArr[i] = n.charAt(i);
+    }
+    boolean truthVal = true;
+    for (int i = 0; i < n.length(); i++) {
+      if (nArr[i] != nArr[n.length()-1-i]) {
+        truthVal = false;
+      }
+    }
+    return truthVal;
+  }
+
+}

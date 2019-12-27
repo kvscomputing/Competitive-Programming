@@ -1,0 +1,64 @@
+/*
+ ID: kvseeth1
+ LANG: JAVA
+ TASK: gift1
+ */
+import java.io.*;
+import java.util.*;
+
+public class gift1
+{
+  public static void main(String[] args) throws IOException
+  {
+    BufferedReader br = new BufferedReader(new FileReader("gift1.in"));
+    PrintWriter pw =
+      new PrintWriter(new BufferedWriter(new FileWriter("gift1.out")));
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    int np = Integer.parseInt(st.nextToken());
+    String[] names = new String[np];
+    int[] balances = new int[np];
+    String giver;
+    int giving;
+    int receivers;
+    String currentReceiver;
+    // create balances and names arrays
+    for (int i = 0; i < np; i++)
+    {
+      balances[i] = 0;
+      names[i] = br.readLine();
+    }
+    // for each giver:
+    for (int i = 0; i < np; i++)
+    {
+      giver = br.readLine();
+      st = new StringTokenizer(br.readLine());
+      giving = Integer.parseInt(st.nextToken());
+      receivers = Integer.parseInt(st.nextToken());
+      // subtract money from giver
+      for (int j = 0; j < np; j++)
+      {
+        if (names[j] == giver)
+        {
+          balances[j] -= (receivers * (giving / receivers));
+        }
+      }
+      // give money to each receiver
+      for (int j = 0; j < receivers; j++)
+      {
+        currentReceiver = br.readLine();
+        for (int k = 0; k < np; k++)
+        {
+          if (names[k] == currentReceiver)
+          {
+            balances[k] += (giving / receivers);
+          }
+        }
+      }
+    }
+    for (int i = 0; i < np; i++)
+    {
+      pw.print(names[i] + " " + balances[i] + "\n");
+    }
+    pw.close();
+  }
+}

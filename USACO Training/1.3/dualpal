@@ -1,0 +1,53 @@
+/*
+ID: kvseeth1
+LANG: JAVA
+PROG: dualpal
+ */
+
+import java.io.*;
+import java.util.*;
+
+public class dualpal
+{
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("dualpal.in"));
+    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("dualpal.out")));
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    int n = Integer.parseInt(st.nextToken());
+    int s = Integer.parseInt(st.nextToken());
+    String baseBoi;
+    int palindromeCount = 0;
+    int printCount = 0;
+    int currentInt = s + 1;
+    while (printCount < n) {
+      for (int j = 2; j <= 10; j++) {
+        baseBoi = Integer.toString(currentInt,j);
+        if (isPalindrome(baseBoi)) {
+          palindromeCount++;
+        }
+      }
+      if (palindromeCount > 1) {
+        pw.print(currentInt + "\n");
+        printCount++;
+      }
+      palindromeCount = 0;
+      currentInt++;
+    }
+    pw.close();
+  }
+  
+  public static boolean isPalindrome(String n) {
+    char[] nArr = new char[n.length()];
+    for (int i = 0; i < n.length(); i++) {
+      nArr[i] = n.charAt(i);
+    }
+    boolean truthVal = true;
+    for (int i = 0; i < n.length(); i++) {
+      if (nArr[i] != nArr[n.length()-1-i]) {
+        truthVal = false;
+      }
+    }
+    return truthVal;
+  }
+
+}

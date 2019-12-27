@@ -1,0 +1,69 @@
+/*
+ ID: kvseeth1
+ LANG: JAVA
+ PROG: beads
+ */
+import java.util.*;
+import java.io.*;
+
+public class beads {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader("beads.in"));
+    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("beads.out")));
+    int n = Integer.parseInt(br.readLine());
+    String necklace = br.readLine();
+    char[] necklaceOriginal = new char[n];
+    char[] necklaceBreak = new char[n];
+    int endIndexOne = 0;
+    int endIndexTwo = 0;
+    char currentColor;
+    int currentTotal = 0;
+    int currentMax = 0;
+    for (int i = 0; i < n; i++) {
+      necklaceOriginal[i] = necklace.charAt(i);
+    }
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < necklace.length()-i; j++) {
+        necklaceBreak[j] = necklaceOriginal[j+i];
+      }
+      for (int j = necklace.length()-i; j<necklace.length(); j++) {
+        necklaceBreak[j]=necklaceOriginal[j-necklace.length()+i];
+      }
+      currentColor=necklaceBreak[0];
+      for (int j = 0; j < necklace.length(); j++) {
+        if (currentColor == 'w') {
+          currentColor = necklaceBreak[j];
+        }
+        if (necklaceBreak[j] == 'w' || necklaceBreak[j] == currentColor) {
+          endIndexOne = j;
+          currentTotal++;
+        }
+        else {
+          break;
+        }
+      }
+      currentColor=necklaceBreak[necklace.length()-1];
+      for (int j = necklace.length()-1; j >= 0; j--) {
+        if (necklaceBreak[j] == 'w' || necklaceBreak[j] == currentColor) {
+          endIndexTwo = j;
+          currentTotal++;
+          if (currentColor == 'w') {
+            currentColor = necklaceBreak[j];
+          }
+        }
+        else {
+          break;
+        }
+      }
+      if (endIndexOne > endIndexTwo) {
+        currentTotal = necklace.length();
+      }
+      if (currentTotal > currentMax) {
+        currentMax = currentTotal;
+      }
+      currentTotal = 0;
+      }
+      pw.print(currentMax+"\n");
+      pw.close();
+    }
+  }
